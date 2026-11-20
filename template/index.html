@@ -1,0 +1,557 @@
+@app.route("/")
+def index():
+    return render_template("index.html")<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CiteVerify — Scientific Claim & Citation Verification System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 1: LANDING / HOME PAGE                                           -->
+  <!-- ===================================================================== -->
+  <div id="landing-page" class="landing-view">
+    <nav class="landing-nav">
+      <div class="landing-nav-inner">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M9 12l2 2 4-4"/>
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <span class="brand-name">CiteVerify</span>
+          <span class="brand-badge">INNOVEDGE 2026</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <a href="#features" style="color:#CBD5E1;font-size:0.9rem;font-weight:500;">Features</a>
+          <a href="#how-it-works" style="color:#CBD5E1;font-size:0.9rem;font-weight:500;">How It Works</a>
+          <button type="button" class="btn btn-accent btn-sm" data-enter-app="dashboard">Launch Workspace</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-section">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            AI-Assisted Academic Integrity &amp; Evidence Auditing
+          </div>
+          <h1 class="hero-title">Verify Every Claim.<br/><span>Trust Every Source.</span></h1>
+          <p class="hero-subtitle">
+            CiteVerify parses scientific manuscripts, maps inline citations to bibliography entries, retrieves primary literature via OpenAlex, Crossref, and arXiv, ranks passage-level evidence with BM25, and audits claim accuracy against verbatim source text.
+          </p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-accent btn-lg" data-enter-app="upload">
+              Get Started
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" class="btn btn-outline btn-lg" style="background:transparent;color:#FFFFFF;border-color:rgba(255,255,255,0.28);" data-enter-app="dashboard">
+              Open Research Dashboard
+            </button>
+          </div>
+        </div>
+
+        <!-- Verification Process Illustration -->
+        <div class="hero-diagram-card" aria-label="CiteVerify Verification Pipeline">
+          <div class="diagram-header">
+            <strong style="color:#F8FAFC;">LIVE VERIFICATION PIPELINE</strong>
+            <span style="color:#38BDF8;">PDF &bull; DOCX &bull; TXT</span>
+          </div>
+          <div class="diagram-step">
+            <div class="diagram-num">1</div>
+            <div>
+              <strong>Claim &amp; Citation Extraction</strong>
+              <span>Splits body and references; detects numeric [1] and author-year (Author, Year) markers.</span>
+            </div>
+          </div>
+          <div class="diagram-step">
+            <div class="diagram-num">2</div>
+            <div>
+              <strong>Scholarly Source Retrieval</strong>
+              <span>Queries OpenAlex, Crossref &amp; arXiv DOIs for open-access full-text PDFs and abstracts.</span>
+            </div>
+          </div>
+          <div class="diagram-step">
+            <div class="diagram-num">3</div>
+            <div>
+              <strong>BM25 Evidence Passage Ranking</strong>
+              <span>Indexes source pages into overlapping windows and ranks top passages per claim.</span>
+            </div>
+          </div>
+          <div class="diagram-step">
+            <div class="diagram-num">4</div>
+            <div>
+              <strong>Grounded Verdict &amp; Quote Guardrails</strong>
+              <span>Verifies support, partial support, contradiction, or staleness with verbatim quote checks.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="landing-section">
+      <div class="section-header">
+        <div class="section-kicker">Core Capabilities</div>
+        <h2 class="section-title">Built for Rigorous Scientific Verification</h2>
+        <p class="section-desc">Every verdict is anchored in retrieved literature passages and transparent confidence guardrails.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h3>Multi-Format Manuscript Parsing</h3>
+          <p>Extracts structured text and tables from PDF and DOCX papers while cleanly separating body prose from reference lists.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3>Open-Access Literature Resolution</h3>
+          <p>Automatically resolves DOIs, arXiv IDs, and bibliographic titles across OpenAlex and Crossref with local disk caching.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Anti-Hallucination Quote Guardrails</h3>
+          <p>Requires verbatim source quotes for positive or contradictory verdicts and downgrades abstract-only confidence automatically.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="how-bg">
+      <div class="landing-section">
+        <div class="section-header">
+          <div class="section-kicker">Workflow</div>
+          <h2 class="section-title">How CiteVerify Works</h2>
+          <p class="section-desc">Four transparent stages from manuscript upload to audit-ready verification reports.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <span class="step-pill">STEP 01</span>
+            <h4>Upload Manuscript</h4>
+            <p>Drop a PDF or DOCX research paper and configure the claim-citation pair limit and AI verdict mode.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-pill">STEP 02</span>
+            <h4>Match Citations</h4>
+            <p>Each inline citation is linked to its corresponding bibliography entry and flagged if missing or unused.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-pill">STEP 03</span>
+            <h4>Inspect Evidence</h4>
+            <p>Review page-level verbatim quotes, BM25-ranked passages, confidence scores, and human review flags.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-pill">STEP 04</span>
+            <h4>Export Audit Report</h4>
+            <p>Download structured JSON or CSV verification reports directly from the backend for peer review.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <div class="footer-inner">
+        <div>
+          <strong style="color:#FFFFFF;">CiteVerify</strong> &mdash; Scientific Claim and Citation Verification System
+        </div>
+        <div>Presented at <strong>INNOVEDGE HACKATHON 2026</strong></div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION WORKSPACE (PAGES 2 - 6)                                   -->
+  <!-- ===================================================================== -->
+  <div id="app-shell" class="app-shell hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div>
+          <div class="brand-lockup" style="cursor:pointer;" id="go-landing-btn" title="Back to Landing Page">
+            <div class="brand-mark" style="width:32px;height:32px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <span class="brand-name" style="font-size:1.12rem;">CiteVerify</span>
+          </div>
+          <div class="sidebar-tagline">Verify Every Claim. Trust Every Source.</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main Navigation">
+        <button type="button" class="nav-item active" data-route="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </button>
+        <button type="button" class="nav-item" data-route="upload">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          New Verification
+        </button>
+        <button type="button" class="nav-item" data-route="verification">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Verification Dashboard
+        </button>
+        <button type="button" class="nav-item" data-route="claims">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Claim-by-Claim Analysis
+        </button>
+        <button type="button" class="nav-item" data-route="history">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Verification History
+        </button>
+        <button type="button" class="nav-item" data-route="reports">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Reports
+        </button>
+        <button type="button" class="nav-item" data-route="about">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          About CiteVerify
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-pill">
+          <span id="backend-dot" class="status-dot"></span>
+          <span id="backend-status-text">Checking server...</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar no-print">
+        <div class="topbar-left">
+          <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div>
+            <div class="page-breadcrumb" id="topbar-breadcrumb">CiteVerify / Workspace</div>
+            <h1 class="page-heading" id="topbar-title">Dashboard</h1>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button type="button" class="btn btn-outline btn-sm" id="topbar-home-btn">Home</button>
+          <button type="button" class="btn btn-primary btn-sm" data-nav="upload">+ New Verification</button>
+        </div>
+      </header>
+
+      <main class="content-container">
+
+        <!-- =============================================================== -->
+        <!-- PAGE 2: MAIN DASHBOARD                                          -->
+        <!-- =============================================================== -->
+        <section id="view-dashboard" class="route-view">
+          <div class="card" style="background:var(--navy-900);color:#FFFFFF;border:none;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;">
+              <div>
+                <h2 style="margin:0 0 6px;font-size:1.45rem;">Welcome to CiteVerify Research Workspace</h2>
+                <p style="margin:0;color:#CBD5E1;max-width:640px;">
+                  Audit scientific claims against primary literature sources, inspect verbatim evidence passages, and export structured verification reports.
+                </p>
+              </div>
+              <button type="button" class="btn btn-accent" data-nav="upload">New Verification</button>
+            </div>
+          </div>
+
+          <!-- Summary Cards for Actual Available Backend Statistics -->
+          <div class="kpi-grid" id="dash-summary-cards"></div>
+
+          <div class="dash-split">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Quick Document Upload</h3>
+                <button type="button" class="btn btn-ghost btn-sm" data-nav="upload">Full Upload Options &rarr;</button>
+              </div>
+              <p style="margin:0 0 14px;color:var(--text-secondary);font-size:0.9rem;">
+                Select a PDF or DOCX research manuscript to run immediate citation verification through the CiteVerify backend.
+              </p>
+              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+                <input type="file" id="quick-file-input" accept=".pdf,.docx" />
+                <button type="button" class="btn btn-primary" id="quick-verify-btn">Upload &amp; Verify</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Quick Access to Reports</h3>
+              </div>
+              <div id="dash-quick-report"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Verification Activity</h3>
+              <button type="button" class="btn btn-outline btn-sm" data-nav="history">View Full History</button>
+            </div>
+            <div id="dash-recent-activity"></div>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- PAGE 3: DOCUMENT UPLOAD                                         -->
+        <!-- =============================================================== -->
+        <section id="view-upload" class="route-view hidden">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" style="font-size:1.2rem;">Upload Scientific Manuscript</h2>
+                <p style="margin:4px 0 0;color:var(--text-secondary);font-size:0.9rem;">
+                  Supported formats: <strong>PDF (.pdf)</strong> and <strong>Word Document (.docx)</strong> with selectable text and a reference section.
+                </p>
+              </div>
+            </div>
+
+            <div id="upload-error-box" class="alert-banner alert-error hidden"></div>
+
+            <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload PDF or DOCX file">
+              <input type="file" id="main-file-input" accept=".pdf,.docx" class="hidden" />
+              <div class="dropzone-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h3 style="margin:0 0 6px;color:var(--navy-900);">Drag &amp; drop your research paper here</h3>
+              <p style="margin:0 0 16px;color:var(--text-secondary);font-size:0.9rem;">
+                Accepts text-based .PDF and .DOCX manuscripts
+              </p>
+              <button type="button" class="btn btn-outline" id="browse-files-btn">Browse Files</button>
+            </div>
+
+            <!-- Selected File Metadata Card -->
+            <div id="selected-file-card" class="file-preview-box hidden">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;border-radius:10px;background:var(--royal-600);color:#FFFFFF;display:grid;place-items:center;font-weight:700;font-size:0.8rem;" id="file-ext-badge">PDF</div>
+                <div>
+                  <div style="font-weight:700;color:var(--navy-900);" id="selected-file-name">document.pdf</div>
+                  <div style="font-size:0.83rem;color:var(--text-secondary);" id="selected-file-meta">0 KB &bull; PDF Document</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button type="button" class="btn btn-outline btn-sm" id="replace-file-btn">Replace File</button>
+                <button type="button" class="btn btn-ghost btn-sm" id="remove-file-btn" style="color:var(--st-red-fg);">Remove</button>
+              </div>
+            </div>
+
+            <div class="upload-options">
+              <label class="form-field">
+                <span>Max claim-citation pairs:</span>
+                <input type="number" id="upload-max-pairs" value="20" min="1" max="50" />
+              </label>
+              <label class="form-field" style="cursor:pointer;">
+                <input type="checkbox" id="upload-use-llm" checked />
+                <span>Enable AI Verdict Synthesis (requires Anthropic API key on server)</span>
+              </label>
+              <div style="margin-left:auto;">
+                <button type="button" class="btn btn-primary btn-lg" id="upload-verify-btn" disabled>
+                  Upload and Verify
+                </button>
+              </div>
+            </div>
+
+            <!-- Upload & Backend Processing Progress -->
+            <div id="upload-progress-panel" class="progress-panel hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div class="spinner"></div>
+                  <strong id="progress-stage-title">Uploading manuscript to CiteVerify backend...</strong>
+                </div>
+                <span id="progress-pct" style="font-family:var(--font-mono);font-size:0.85rem;">15%</span>
+              </div>
+              <div class="progress-track">
+                <div id="progress-fill" class="progress-fill"></div>
+              </div>
+              <div id="progress-stage-sub" style="font-size:0.83rem;color:#CBD5E1;">
+                Extracting claims, querying OpenAlex/Crossref/arXiv, and ranking evidence passages...
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- PAGE 4: VERIFICATION DASHBOARD                                  -->
+        <!-- =============================================================== -->
+        <section id="view-verification" class="route-view hidden">
+          <div id="verification-empty" class="empty-state">
+            <h3>No Verification Results Loaded</h3>
+            <p>Upload a PDF or DOCX manuscript to inspect extracted claims, citation counts, and source verification metrics.</p>
+            <button type="button" class="btn btn-primary" data-nav="upload">Upload Document</button>
+          </div>
+
+          <div id="verification-content" class="hidden">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title" style="font-size:1.15rem;">Document Verification Overview</h2>
+                  <p style="margin:3px 0 0;font-size:0.85rem;color:var(--text-secondary);">Actual backend extraction and verification breakdown</p>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <button type="button" class="btn btn-outline btn-sm" data-nav="claims">Inspect Claim-by-Claim</button>
+                  <button type="button" class="btn btn-primary btn-sm" data-nav="reports">Open Full Report</button>
+                </div>
+              </div>
+              <div id="verif-doc-meta" class="doc-meta-grid"></div>
+              <div id="verif-notes-area" style="margin-top:14px;"></div>
+            </div>
+
+            <!-- Status Summary KPI Cards (only categories returned by backend) -->
+            <div id="verif-kpi-grid" class="kpi-grid"></div>
+
+            <!-- Visualizations & Source Retrieval Breakdown -->
+            <div class="dash-split">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Verification Verdict Distribution</h3>
+                </div>
+                <div id="verdict-chart-container" class="chart-wrap"></div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Reference &amp; Full-Text Coverage</h3>
+                </div>
+                <div id="source-coverage-container"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- PAGE 5: CLAIM-BY-CLAIM ANALYSIS                                 -->
+        <!-- =============================================================== -->
+        <section id="view-claims" class="route-view hidden">
+          <div id="claims-empty" class="empty-state">
+            <h3>No Claims Analyzed Yet</h3>
+            <p>Run a verification on a document to inspect individual claims, matched citations, verbatim quotes, and confidence scores.</p>
+            <button type="button" class="btn btn-primary" data-nav="upload">Start Verification</button>
+          </div>
+
+          <div id="claims-content" class="hidden">
+            <div class="card" style="padding:16px 20px;">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+                <div id="claims-filter-bar" class="filter-bar" style="margin:0;"></div>
+                <div style="display:flex;gap:8px;">
+                  <button type="button" class="btn btn-outline btn-sm" id="expand-all-btn">Expand All</button>
+                  <button type="button" class="btn btn-outline btn-sm" id="collapse-all-btn">Collapse All</button>
+                </div>
+              </div>
+            </div>
+            <div id="claims-cards-list"></div>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- PAGE 2B: VERIFICATION HISTORY                                   -->
+        <!-- =============================================================== -->
+        <section id="view-history" class="route-view hidden">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Verification History &amp; Reviewer Audit Log</h2>
+                <p style="margin:4px 0 0;font-size:0.86rem;color:var(--text-secondary);">
+                  Session runs and persisted human review decisions from <code>/api/v1/reviews</code>
+                </p>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" id="refresh-history-btn">Refresh Log</button>
+            </div>
+            <div id="history-runs-container" style="margin-bottom:24px;"></div>
+            <h3 class="card-title" style="margin-bottom:12px;">Saved Human Review Decisions (Backend <code>review_history.json</code>)</h3>
+            <div id="history-reviews-container"></div>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- PAGE 6: REPORTS                                                 -->
+        <!-- =============================================================== -->
+        <section id="view-reports" class="route-view hidden">
+          <div id="reports-empty" class="empty-state">
+            <h3>No Verification Report Available</h3>
+            <p>Verify a document first to preview the structured audit report and download JSON or CSV exports from the backend.</p>
+            <button type="button" class="btn btn-primary" data-nav="upload">Upload Document</button>
+          </div>
+
+          <div id="reports-content" class="hidden">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title" style="font-size:1.2rem;" id="report-doc-heading">Verification Report</h2>
+                  <p style="margin:4px 0 0;font-size:0.85rem;color:var(--text-secondary);" id="report-timestamp-sub"></p>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;" class="no-print">
+                  <button type="button" class="btn btn-primary" id="download-json-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Report (JSON)
+                  </button>
+                  <button type="button" class="btn btn-outline" id="download-csv-btn">
+                    Download Report (CSV)
+                  </button>
+                  <button type="button" class="btn btn-ghost" onclick="window.print()">Print Preview</button>
+                </div>
+              </div>
+
+              <div id="report-summary-strip" class="doc-meta-grid" style="margin-bottom:18px;"></div>
+              <div id="report-disclaimer-box" class="alert-banner alert-info"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Claim-Wise Verification Results, Evidence &amp; Source Links</h3>
+              </div>
+              <div id="report-claims-table-wrap" class="table-wrap"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Flagged References &amp; Audit Notes</h3>
+              </div>
+              <div id="report-flagged-section"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- ABOUT CITEVERIFY                                                -->
+        <!-- =============================================================== -->
+        <section id="view-about" class="route-view hidden">
+          <div class="card">
+            <h2 class="card-title" style="font-size:1.25rem;margin-bottom:10px;">About CiteVerify</h2>
+            <p style="color:var(--text-secondary);">
+              <strong>CiteVerify</strong> is a Scientific Claim and Citation Verification System built for <strong>INNOVEDGE HACKATHON 2026</strong>. It prevents misattributed citations, unsupported numerical claims, and hallucinated references in academic manuscripts.
+            </p>
+            <div class="detail-grid-2" style="margin-top:18px;">
+              <div class="detail-box">
+                <div class="detail-label">Backend Architecture</div>
+                <p style="margin:0;font-size:0.9rem;color:var(--text-secondary);">
+                  Powered by Python Flask (<code>final.py</code>), PyMuPDF &amp; python-docx document extraction, OpenAlex / Crossref / arXiv literature retrieval, BM25 passage ranking, and Anthropic Claude evidence verification with verbatim quote enforcement.
+                </p>
+              </div>
+              <div class="detail-box">
+                <div class="detail-label">Backend API Endpoints</div>
+                <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-secondary);">
+                  <li><code>GET /api/v1/health</code> &mdash; Server &amp; LLM availability status</li>
+                  <li><code>POST /api/v1/analyze</code> &mdash; Document upload &amp; verification pipeline</li>
+                  <li><code>GET / POST /api/v1/reviews</code> &mdash; Human reviewer audit log</li>
+                  <li><code>GET /api/v1/export/&lt;json|csv&gt;</code> &mdash; Structured report downloads</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-box" class="toast-box hidden" role="status" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
